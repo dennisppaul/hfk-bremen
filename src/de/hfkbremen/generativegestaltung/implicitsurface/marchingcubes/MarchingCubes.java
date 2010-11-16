@@ -1,3 +1,9 @@
+
+
+/**
+ * generative gestaltung
+ *
+ */
 /*
 Given a grid cell and an isolevel, calculate the triangular
 facets required to represent the isosurface through the cell.
@@ -5,11 +11,10 @@ Return the number of triangular facets, the array "triangles"
 will be loaded up with the vertices at most 5 triangular facets.
 0 will be returned if the grid cell is either totally above
 of totally below the isolevel.
+
+class contains methods for taking 8 points and turning it into a corresponding set of triangles
+taken heavily from http://astronomy.swin.edu.au/~pbourke/modelling/polygonise/
  */
-// class contains methods for taking 8 points and turning it into a corresponding set of triangles
-// taken heavily from http://astronomy.swin.edu.au/~pbourke/modelling/polygonise/
-
-
 package de.hfkbremen.generativegestaltung.implicitsurface.marchingcubes;
 
 

@@ -18,7 +18,7 @@ import processing.xml.XMLElement;
 public class SketchTreeOfLife
         extends PApplet {
 
-    private Node mRoot;
+    private TOLNode mRoot;
 
     private final float X_ADVANCE = 5.0f;
 
@@ -31,7 +31,7 @@ public class SketchTreeOfLife
 
         /* parse tree from XML */
         XMLElement mXML = new XMLElement(this, "generativegestaltung/vertebrata.xml");
-        mRoot = new Node(mXML.getChild("NODE"), null);
+        mRoot = new TOLNode(mXML.getChild("NODE"), null);
     }
 
     public void draw() {
@@ -45,9 +45,9 @@ public class SketchTreeOfLife
         mRoot.draw();
     }
 
-    private class Node {
+    private class TOLNode {
 
-        private final Vector<Node> mChildren = new Vector<Node>();
+        private final Vector<TOLNode> mChildren = new Vector<TOLNode>();
 
         private final String mName;
 
@@ -55,9 +55,9 @@ public class SketchTreeOfLife
 
         private final PVector mPosition;
 
-        private final Node mParent;
+        private final TOLNode mParent;
 
-        public Node(final XMLElement pNodeData, final Node pParent) {
+        public TOLNode(final XMLElement pNodeData, final TOLNode pParent) {
             mParent = pParent;
             mIsLeaf = pNodeData.getAttribute("LEAF").equals("1");
             mName = pNodeData.getChild("NAME").getContent();
@@ -75,7 +75,7 @@ public class SketchTreeOfLife
             if (mChildNodes != null) {
                 for (int i = 0; i < mChildNodes.getChildCount(); i++) {
                     final XMLElement mChildNode = mChildNodes.getChild(i);
-                    final Node mChild = new Node(mChildNode, this);
+                    final TOLNode mChild = new TOLNode(mChildNode, this);
                     mChildren.add(mChild);
                 }
             }

@@ -1,5 +1,9 @@
 
 
+/**
+ * generative gestaltung
+ *
+ */
 package de.hfkbremen.generativegestaltung.implicitsurface.marchingcubes;
 
 

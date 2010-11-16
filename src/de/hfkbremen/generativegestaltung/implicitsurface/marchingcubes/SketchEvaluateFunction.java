@@ -4,7 +4,6 @@
  * generative gestaltung
  *
  */
-
 package de.hfkbremen.generativegestaltung.implicitsurface.marchingcubes;
 
 
@@ -14,26 +13,16 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 
-public class SketchEnergyField
+public class SketchEvaluateFunction
         extends PApplet {
 
-    private ControlP5 controlP5;
-
     private float mRotation;
-
-    private float mThreshold = 0.5f;
-
-    private float mNoiseScale = 6.0f;
 
     private float[][][] mField;
 
     public void setup() {
         size(640, 480, OPENGL);
         hint(ENABLE_DEPTH_SORT);
-
-        controlP5 = new ControlP5(this);
-        controlP5.addSlider("mThreshold", 0, 1, mThreshold, 10, 20, 100, 14);
-        controlP5.addSlider("mNoiseScale", 0, 10, mNoiseScale, 10, 40, 100, 14);
 
         mField = new float[20][20][20];
     }
@@ -44,14 +33,16 @@ public class SketchEnergyField
         for (int x = 0; x < mField.length; x++) {
             for (int y = 0; y < mField[x].length; y++) {
                 for (int z = 0; z < mField[x][y].length; z++) {
-                    mField[x][y][z] = noise(x / mNoiseScale, y / mNoiseScale, z / mNoiseScale);
+                    PVector p = new PVector(x, y, z);
+                    p.div(new PVector(mField.length, mField[x].length, mField[x][y].length));
+                    mField[x][y][z] = evaluateFunction(p);
                 }
             }
         }
 
         /* calculate triangles */
         Vector<PVector> mTriangles = new Vector<PVector>();
-        MarchingCubes.triangles(mTriangles, mField, mThreshold);
+        MarchingCubes.triangles(mTriangles, mField, 0.0f);
 
         /* draw */
         background(164);
@@ -82,7 +73,18 @@ public class SketchEnergyField
         popMatrix();
     }
 
+    private float evaluateFunction(PVector p) {
+        float r = 0.3f;
+        PVector c = new PVector(mouseX / (float)width, mouseY / (float)height, 0.5f);
+        float x = p.x - c.x;
+        float y = p.y - c.y;
+        float z = p.z - c.z;
+        return sqrt(x * x + y * y + z * z) - r;
+        /* you can also use weird functions like the following: */
+//         return pow(sin(x * 10.0f), 2) * cos(y * y * 20) * 0.5f + sin(z * z * z * 4) * 0.5f;
+    }
+
     public static void main(String args[]) {
-        PApplet.main(new String[] {SketchEnergyField.class.getName()});
+        PApplet.main(new String[] {SketchEvaluateFunction.class.getName()});
     }
 }
