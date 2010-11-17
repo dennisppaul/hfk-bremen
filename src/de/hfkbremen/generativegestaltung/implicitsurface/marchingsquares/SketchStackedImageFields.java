@@ -43,10 +43,10 @@ public class SketchStackedImageFields
 
         mVideo = new Capture(this, 160, 120, 12);
 
-        mResolutionScaleX = width / mVideo.width;
-        mResolutionScaleY = height / mVideo.height;
-        mGridX = width / mResolutionScaleX;
-        mGridY = height / mResolutionScaleY;
+        mResolutionScaleX = 640;
+        mResolutionScaleY = 480;
+        mGridX = 160;
+        mGridY = 120;
         mGrid = new float[mGridX][mGridY];
 
         mLines = new Vector<PVector>();
@@ -80,6 +80,8 @@ public class SketchStackedImageFields
                 extractEnergy(mImageStack[i]);
                 mLines.clear();
                 MarchingSquares.lines(mLines, mGrid, mISOValue);
+                float mZ = (i - 2) * 10;
+                drawLines(mLines, mZ);
             }
         }
     }

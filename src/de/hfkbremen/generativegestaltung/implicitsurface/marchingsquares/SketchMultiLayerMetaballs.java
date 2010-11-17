@@ -35,10 +35,10 @@ public class SketchMultiLayerMetaballs
         smooth();
         noFill();
 
-        mResolutionScaleX = 10;
-        mResolutionScaleY = 10;
-        mGridX = width / mResolutionScaleX;
-        mGridY = height / mResolutionScaleY;
+        mResolutionScaleX = 640;
+        mResolutionScaleY = 480;
+        mGridX = 64;
+        mGridY = 48;
         mGrid = new float[mGridX][mGridY];
 
         mLines = new Vector<PVector>();
@@ -80,23 +80,26 @@ public class SketchMultiLayerMetaballs
         stroke(0, 64);
         rect(0, 0, width, height);
 
-        /* perform marching squares -- on seven layers*/
+        /* perform marching squares -- on seven layers */
         for (int i = 0; i < 5; i++) {
             float mZ = (i - 2) * 10;
             updateGridValues(mZ);
             mLines.clear();
             MarchingSquares.lines(mLines, mGrid, mISOValue);
+            drawLines(mLines, mZ);
         }
     }
 
     private void updateGridValues(float pZ) {
+        final float mScaleX = mResolutionScaleX / mGridX;
+        final float mScaleY = mResolutionScaleX / mGridX;
         for (int x = 0; x < mGrid.length; x++) {
             for (int y = 0; y < mGrid[x].length; y++) {
                 mGrid[x][y] = 0;
                 for (int i = 0; i < mBalls.size(); i++) {
                     /* scale grid postions to screen positions */
-                    float mX = mResolutionScaleX * x;
-                    float mY = mResolutionScaleY * y;
+                    float mX = mScaleX * x;
+                    float mY = mScaleY * y;
                     mGrid[x][y] += mBalls.get(i).strength(mX, mY, pZ);
                 }
             }
