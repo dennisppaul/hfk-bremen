@@ -76,12 +76,13 @@ public class SketchEvaluateFunction
     private float evaluateFunction(PVector p) {
         float r = 0.3f;
         PVector c = new PVector(mouseX / (float)width, mouseY / (float)height, 0.5f);
-        float x = p.x - c.x;
-        float y = p.y - c.y;
-        float z = p.z - c.z;
+        float x = (p.x - c.x);
+        float y = (p.y - c.y);
+        float z = (p.z - c.z);
         return sqrt(x * x + y * y + z * z) - r;
         /* you can also use weird functions like the following: */
 //         return pow(sin(x * 10.0f), 2) * cos(y * y * 20) * 0.5f + sin(z * z * z * 4) * 0.5f;
+//        return (0.5f * sin(x) + sqrt(y * y + z * z) - 1.5f);
     }
 
     public static void main(String args[]) {
