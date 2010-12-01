@@ -265,11 +265,28 @@ function putImageData(image, dx, dy, ddx, ddy, ddw, ddh) {
 }
 
 function createImageData(image) {
-  context.createImageData(image);
+  return context.createImageData(image);
 }
 
-function getImageData(sx, sy, sw, sh) {
-  context.getImageData(sx, sy, sw, sh);
+function getImageData(sx, sy, sw, sh, ra) {
+  if (ra) {
+    var data = [],
+        img = context.getImageData(sx, sy, sw, sh).data,
+        i = img.length,
+        j = width;
+
+    while (j--) {
+      data[j] = new Array(width);
+    }
+    
+    while (i--) {
+      data[((i/4)%width)|0][((i/width)/4|0)] = img[i];
+    }
+
+    return data;
+  } else {
+    return context.getImageData(sx, sy, sw, sh);
+  }
 }
 
 function drawImageFromRect(image, sx, sy, w, sh, dx, dy, dw, dh) {

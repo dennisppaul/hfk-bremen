@@ -27,7 +27,9 @@
 
         if (typeof(draw) === 'function') {
           (function loop() {
+            save();
             draw();
+            restore();
             setTimeout(loop, 1000/33)
           })();
         }
