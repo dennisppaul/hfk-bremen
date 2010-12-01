@@ -1,5 +1,4 @@
 import processing.opengl.*;
-import controlP5.ControlP5;
 
 float mRotation;
 float[][][] mField;

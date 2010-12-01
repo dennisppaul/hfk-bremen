@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Canvas Frame</title>
+    <meta name="description" content="A simpler Frame for the canvas element">
+    <meta name="author" content="Philip Wagner">
+    <script>function $(a){return document.getElementById(a)}function $$(a){return document.querySelectorAll(a)}HTMLElement.prototype.e=function(a,b){this.addEventListener(a,b,false);return this};HTMLElement.prototype.c=HTMLDivElement.prototype.c=function(a){this.style.cssText+=";"+a;return this};</script>
+    <style media="screen">
+      * { margin: 0; padding: 0; }
+      body { background: #eee; }
+      canvas { position: absolute;}
+      #description {position:absolute;top:20px;right:20px;background: #eee;color:#333;font:italic 14px/1.3em Palatino, Georgia, serif;padding:5px 10px;width:230px;opacity: .2;-webkit-transition:opacity .5s;}
+      #description:hover {opacity: 1;}
+      h1{font-size:18px;padding:0 0 .5em;}
+    </style>
+    <script src="require.js"></script>
+    <script>
+      var t;
+      require(['vector.js', 'frame.js', 's/raster.js'], function() {
+        if (typeof(setup) === 'function') {
+          setup();
+        }
+
+        if (typeof(draw) === 'function') {
+          (function loop() {
+            draw();
+            setTimeout(loop, 1000/33)
+          })();
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+    <div id="description">
+      <h1 id="title"></h1>
+      <div id="text">
+        
+      </div>
+    </div>
+  </body>
+</html>
