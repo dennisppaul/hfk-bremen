@@ -20,7 +20,7 @@
       if (window.location.hash != '') {
         t = window.location.hash.replace('#', 's/') + '.js';
       }
-      require(['vector.js', 'frame.js', t], function() {
+      require(['vector.js', 'frame.js', 's/1.js'], function() {
         if (typeof(setup) === 'function') {
           setup();
         }
