@@ -3,6 +3,7 @@
 package de.hfkbremen.generativegestaltung.virtualintelligence;
 
 
+import mathematik.Vector3f;
 import processing.core.PApplet;
 import teilchen.BehaviorParticle;
 import teilchen.Physics;
@@ -32,7 +33,6 @@ public class WanderAndSeekAgent
         changeState(new StateWander());
     }
 
-
     public void loop() {
         mState.loop();
     }
@@ -41,7 +41,12 @@ public class WanderAndSeekAgent
         mState.draw();
     }
 
+    public Vector3f position() {
+        return mParticle.position();
+    }
+
     private void drawAgent() {
+        p.noFill();
         p.stroke(0, 127);
         p.ellipse(mParticle.position().x,
                   mParticle.position().y,
@@ -59,7 +64,7 @@ public class WanderAndSeekAgent
 
             /* create arrival behavior */
             mArrival = new Arrival();
-            mArrival.breakforce(mParticle.maximumInnerForce() * 0.25f);
+            mArrival.breakforce(mParticle.maximumInnerForce() * 0.1f);
             mArrival.breakradius(mParticle.maximumInnerForce() * 0.25f);
             mArrival.position().set(p.mouseX, p.mouseY);
             mParticle.behaviors().add(mArrival);
@@ -72,6 +77,7 @@ public class WanderAndSeekAgent
         }
 
         public void draw() {
+            p.noFill();
             p.stroke(127, 255, 0, 127);
             p.ellipse(mArrival.position().x,
                       mArrival.position().y,
@@ -93,14 +99,14 @@ public class WanderAndSeekAgent
         private Wander mWander;
 
         public void begin() {
-            mParticle.maximumInnerForce(100);
+            mParticle.maximumInnerForce(50);
 
             mWander = new Wander();
             mWander.steeringstrength(20);
             mParticle.behaviors().add(mWander);
 
             mMotor = new VelocityMotor();
-            mMotor.strength(5);
+            mMotor.strength(4);
             mParticle.behaviors().add(mMotor);
         }
 
