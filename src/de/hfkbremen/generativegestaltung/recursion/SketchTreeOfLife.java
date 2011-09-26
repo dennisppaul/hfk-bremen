@@ -59,7 +59,7 @@ public class SketchTreeOfLife
 
         public TOLNode(final XMLElement pNodeData, final TOLNode pParent) {
             mParent = pParent;
-            mIsLeaf = pNodeData.getAttribute("LEAF").equals("1");
+            mIsLeaf = pNodeData.getString("LEAF").equals("1");
             mName = pNodeData.getChild("NAME").getContent();
             mPosition = new PVector();
 
